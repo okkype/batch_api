@@ -63,11 +63,11 @@ while True:
         
         batch_procs = BatchProc.objects.filter(state='DR')
         for batch_proc in batch_procs:
-            time.sleep(0.001)
+            time.sleep(0.01)
             batch_proc.state = 'CO'
              
             cr = cn.cursor(as_dict=True)
-            cr.execute("select * from BATCH where BatchID like '%s'" % (batch_proc.batch_id))
+            cr.execute("select * from BATCH, LOAD where BATCH.LoadID = LOAD.LoadID and BATCH.BatchID like '%s'" % (batch_proc.batch_id))
             data = cr.fetchone()
              
             ws = CreateDataRequest()
@@ -99,6 +99,13 @@ while True:
                 Field('Temperature', data['Temperature']),
                 Field('Temperature_UOM', data['Temperature_UOM']),
                 Field('Power_Target', data['Power_Target']),
+                Field('Reship_ItemID', data['Reship_ItemID']),
+                Field('Reship_Item_Code', data['Reship_Item_Code']),
+                Field('Reship_Item_Description', data['Reship_Item_Description']),
+                Field('Reship_LoadID', data['Reship_LoadID']),
+                Field('Reship_Load_Code', data['Reship_Load_Code']),
+                Field('Reship_Qty', data['Reship_Qty']),
+                Field('Reship_Qty_UOM', data['Reship_Qty_UOM']),
             ]
               
             wsc = WebServiceConnection()
@@ -132,7 +139,7 @@ while True:
             datas = cr.fetchall()
 
             for data in datas:
-                time.sleep(0.001)
+                time.sleep(0.01)
                 ws = CreateDataRequest()
                 ws.web_service_type = 'InsertCBatchPlantLine'
                 ws.login = login
