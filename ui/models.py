@@ -26,17 +26,47 @@ class BatchConfig(models.Model):
     class Meta:
         verbose_name = 'EBatch Config'
         
-class BatchProc(models.Model):
+# class BatchProc(models.Model):
+#     created = models.DateTimeField(auto_now_add=True, null=True)
+#     updated = models.DateTimeField(auto_now=True, null=True)
+#     batch_id = models.CharField('BatchID', max_length=100, primary_key=True, unique=True)
+#     c_batch_id = models.CharField('BatchID', max_length=100, null=True)
+#     batch_created = models.DateTimeField('CreatedDate')
+#     state = models.CharField('State', max_length=2, choices=(
+#         ('DR', 'New'),
+#         ('CO', 'Complete'),
+#         ('UP', 'Upload')
+#     ), default='DR')
+#       
+#     class Meta:
+#         verbose_name = 'EBatch Batch Proc'
+#         
+# class TicketProc(models.Model):
+#     created = models.DateTimeField(auto_now_add=True, null=True)
+#     updated = models.DateTimeField(auto_now=True, null=True)
+#     ticket_id = models.CharField('TicketID', max_length=100, primary_key=True, unique=True)
+#     c_ticket_id = models.CharField('Forca TicketID', max_length=100, null=True)
+#     ticket_created = models.DateTimeField('CreatedDate')
+#     state = models.CharField('State', max_length=2, choices=(
+#         ('DR', 'New'),
+#         ('CO', 'Complete'),
+#         ('UP', 'Upload')
+#     ), default='DR')
+#     
+#     class Meta:
+#         verbose_name = 'EBatch Ticket Proc'
+        
+class LoadProc(models.Model):
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True, null=True)
-    batch_id = models.CharField('BatchID', max_length=100, primary_key=True, unique=True)
-    c_batch_plant_id = models.CharField('BatchID', max_length=100, null=True)
-    batch_created = models.DateTimeField('CreatedDate')
+    load_id = models.CharField('LoadID', max_length=100, primary_key=True, unique=True)
+    c_load_id = models.CharField('Forca LoadID', max_length=100, null=True)
+    load_end = models.DateTimeField('Load End')
     state = models.CharField('State', max_length=2, choices=(
         ('DR', 'New'),
         ('CO', 'Complete'),
         ('UP', 'Upload')
     ), default='DR')
-    
+     
     class Meta:
-        verbose_name = 'EBatch Proc'
+        verbose_name = 'EBatch Load Proc'
