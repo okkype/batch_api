@@ -60,7 +60,7 @@ while True:
         for data in rw:
             proc = False
             try:
-                proc = LoadProc.objects.get(id=data[0])
+                proc = LoadProc.objects.get(pk=data[0])
             except:
                 pass
             if proc:
@@ -72,7 +72,8 @@ while True:
                 proc.save()
         cr.close()
         
-        for proc in LoadProc.objects.filter(c_load_id__isnull=True).order_by('load_end'):
+        procs = LoadProc.objects.filter(c_load_id__isnull=True).order_by('load_end')
+        for proc in procs:
             load_ok = False
             time.sleep(0.01)
             proc.state = 'CO'
