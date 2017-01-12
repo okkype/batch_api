@@ -51,7 +51,7 @@ while True:
                 LOAD
             WHERE
                 Load_End_TDS IS NOT NULL
-                AND Load_End_TDS >= DATEADD(DAY, -3, GETDATE())
+                AND Load_End_TDS >= DATEADD(DAY, -7, GETDATE())
             ORDER BY
                 Load_End_TDS DESC;
         ''')
@@ -64,7 +64,7 @@ while True:
             except:
                 pass
             if proc:
-                break
+                pass
             else:
                 proc = LoadProc()
                 proc.load_id = data[0]
