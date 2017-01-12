@@ -75,9 +75,8 @@ while True:
         procs = LoadProc.objects.filter(c_load_id__isnull=True).order_by('load_end')
         for proc in procs:
             load_ok = False
-            time.sleep(0.01)
             proc.state = 'CO'
-#
+
             cr = cn.cursor(as_dict=True)
             cr.execute("""
                 SELECT
@@ -94,10 +93,11 @@ while True:
             """ % (proc.load_id))
             data = cr.fetchone()
             if data:
+                time.sleep(0.01)
                 ws = CreateDataRequest()
                 ws.web_service_type = 'InsertEBatchLoad'
                 ws.login = login
-    #
+
                 ws.data_row = [
                     Field('Alias_Code', data['Alias_Code']),
                     Field('Apply_Add_Trim_Flag', data['Apply_Add_Trim_Flag'] and 'Y' or 'N'),
@@ -167,12 +167,12 @@ while True:
                     Field('Ticket_Code', data['Ticket_Code']),
                     Field('M_Warehouse_ID', m_warehouse_id),
                 ]
-    #               
+
                 wsc = WebServiceConnection()
                 wsc.url = ad_url
-                wsc.attempts = 3
+                wsc.attempts = 1
                 wsc.app_name = 'InsertEBatchLoad'
-    #              
+
                 try:
                     response = wsc.send_request(ws)
                     wsc.print_xml_request()
@@ -192,106 +192,124 @@ while True:
                         load_ok = True
                 except Exception as e:
                     print(e)
-    #      
-                cr.close()
-    #             
-                if load_ok:
-                    cr = cn.cursor(as_dict=True)
-                    cr.execute("select * from LOAD_LINE where LoadID like '%s'" % (proc.load_id))
-                    datas = cr.fetchall()
-        # 
-                    for data in datas:
-                        time.sleep(0.01)
-                        ws = CreateDataRequest()
-                        ws.web_service_type = 'InsertEBatchLoadLine'
-                        ws.login = login
-        #                 
-                        ws.data_row = [
-                            Field('C_Batch_Load_ID', proc.c_load_id),
-                            Field('Absorbed_Water', data['Absorbed_Water']),
-                            Field('Absorption_Percent', data['Absorption_Percent']),
-                            Field('Actual_Water', data['Actual_Water']),
-                            Field('Actual_Water_Calc_Type', data['Actual_Water_Calc_Type']),
-                            Field('Adjust_UOM', data['Adjust_UOM']),
-                            Field('Alias_Code', data['Alias_Code']),
-                            Field('Amt_UOM', data['Amt_UOM']),
-                            Field('Archive_Flag', data['Archive_Flag'] and 'Y' or 'N'),
-                            Field('Based_On_Factor', data['Based_On_Factor']),
-                            Field('Based_On_Qty', data['Based_On_Qty']),
-                            Field('Based_On_UOM', data['Based_On_UOM']),
-                            Field('Calc_Factor', data['Calc_Factor']),
-                            Field('Calc_Moisture_Percent', data['Calc_Moisture_Percent']),
-                            Field('Correction_Factor', data['Correction_Factor']),
-                            Field('CreateDate', data['CreateDate']),
-                            Field('CreatedBy_Batch', data['CreatedBy']),
-                            Field('Delete_Flag', data['Delete_Flag'] and 'Y' or 'N'),
-                            Field('Design_Absorbed_Water', data['Design_Absorbed_Water']),
-                            Field('Design_Entry_Qty', data['Design_Entry_Qty']),
-                            Field('Design_Free_Water', data['Design_Free_Water']),
-                            Field('Design_SSD_Net_Target_Qty', data['Design_SSD_Net_Target_Qty']),
-                            Field('Design_SSD_Qty', data['Design_SSD_Qty']),
-                            Field('Design_UOM', data['Design_UOM']),
-                            Field('Dispatch_Design_Qty', data['Dispatch_Design_Qty']),
-                            Field('Dispatch_Design_UOM', data['Dispatch_Design_UOM']),
-                            Field('Do_Not_Batch_Flag', data['Do_Not_Batch_Flag'] and 'Y' or 'N'),
-                            Field('Effectiveness_Percent', data['Effectiveness_Percent']),
-                            Field('Ingred_ItemID', data['Ingred_ItemID']),
-                            Field('Ingredient_Source_Type', data['Ingredient_Source_Type']),
-                            Field('Item_Code', data['Item_Code']),
-                            Field('Item_Description', data['Item_Description']),
-                            Field('Kgs_Per_Liter', data['Kgs_Per_Liter']),
-                            Field('Load_Adjust_Qty', data['Load_Adjust_Qty']),
-                            Field('Load_LineID', data['Load_LineID']),
-                            Field('LoadID', data['LoadID']),
-                            Field('Manual_Feed_Flag', data['Manual_Feed_Flag'] and 'Y' or 'N'),
-                            Field('Modified_Flag', data['Modified_Flag'] and 'Y' or 'N'),
-                            Field('Moisture_Entry_Ref_Type', data['Moisture_Entry_Ref_Type']),
-                            Field('Net_Auto_Batched_Amt', data['Net_Auto_Batched_Amt']),
-                            Field('Net_Batched_Amt', data['Net_Batched_Amt']),
-                            Field('Net_Target_Amt', data['Net_Target_Amt']),
-                            Field('Net_Used_Amt', data['Net_Used_Amt']),
-                            Field('NoteExistsFlag', data['NoteExistsFlag']),
-                            Field('RecordDate', data['RecordDate']),
-                            Field('RowPointer', data['RowPointer']),
-                            Field('Scale_UOM', data['Scale_UOM']),
-                            Field('Slump_Factor', data['Slump_Factor']),
-                            Field('Solids_Specific_Gravity', data['Solids_Specific_Gravity']),
-                            Field('Sort_Line_Num', data['Sort_Line_Num']),
-                            Field('Specific_Gravity', data['Specific_Gravity']),
-                            Field('Substitution_Factor', data['Substitution_Factor']),
-                            Field('Tolerance_Over_Amt', data['Tolerance_Over_Amt']),
-                            Field('Tolerance_Under_Amt', data['Tolerance_Under_Amt']),
-                            Field('Total_Moisture_Percent', data['Total_Moisture_Percent']),
-                            Field('Trim_Qty', data['Trim_Qty']),
-                            Field('Trim_UOM', data['Trim_UOM']),
-                            Field('UpdatedBy_Batch', data['UpdatedBy']),
-                            Field('Water_UOM', data['Water_UOM']),
-                        ]
-        #                 
-                        wsc = WebServiceConnection()
-                        wsc.url = ad_url
-                        wsc.attempts = 3
-                        wsc.app_name = 'InsertEBatchLoadLine'
-                         
-                        response = wsc.send_request(ws)
-                        wsc.print_xml_request()
-                        wsc.print_xml_response()
-                        try:
-                            if response.status == WebServiceResponseStatus.Error:
-                                print('Error: ' + response.error_message)
-                            else:
-                                print('RecordID: ' + str(response.record_id))
-                                for field in response.output_fields:
-                                    print(str(field.column) + ': ' + str(field.value))
-                                print('---------------------------------------------')
-                                print('Web Service Type: ' + ws.web_service_type)
-                                print('Attempts: ' + str(wsc.attempts_request))
-                                print('Time: ' + str(wsc.time_request))
-                        except Exception as e:
-                            print(e)
-                    cr.close()
-        #             
-                    proc.save()
 
+                cr.close()
+
+                if load_ok:
+                    cr = cn.cursor()
+                    cr.execute("select Load_LineID from LOAD_LINE where LoadID like '%s'" % (proc.load_id))
+                    datas = cr.fetchall()
+
+                    for data in datas:
+                        proc_line = LoadLineProc()
+                        proc_line.load_id = proc
+                        proc_line.loadline_id = data[0]
+                        proc_line.save()
+                        
+                    cr.close()
+
+                    proc.save()
+        
+        proc_lines = LoadLineProc.objects.filter(c_loadline_id__isnull=True)
+        for proc_line in proc_lines:
+            loadline_ok = False
+            proc_line.state = 'CO'
+            
+            cr = cn.cursor(as_dict=True)
+            cr.execute("select * from LOAD_LINE where Load_LineID like '%s'" % (proc_line.loadline_id))
+            data = cr.fetchone()
+            
+            if data:
+                time.sleep(0.01)
+                ws = CreateDataRequest()
+                ws.web_service_type = 'InsertEBatchLoadLine'
+                ws.login = login
+
+                ws.data_row = [
+                    Field('C_Batch_Load_ID', proc_line.load_id.c_load_id),
+                    Field('Absorbed_Water', data['Absorbed_Water']),
+                    Field('Absorption_Percent', data['Absorption_Percent']),
+                    Field('Actual_Water', data['Actual_Water']),
+                    Field('Actual_Water_Calc_Type', data['Actual_Water_Calc_Type']),
+                    Field('Adjust_UOM', data['Adjust_UOM']),
+                    Field('Alias_Code', data['Alias_Code']),
+                    Field('Amt_UOM', data['Amt_UOM']),
+                    Field('Archive_Flag', data['Archive_Flag'] and 'Y' or 'N'),
+                    Field('Based_On_Factor', data['Based_On_Factor']),
+                    Field('Based_On_Qty', data['Based_On_Qty']),
+                    Field('Based_On_UOM', data['Based_On_UOM']),
+                    Field('Calc_Factor', data['Calc_Factor']),
+                    Field('Calc_Moisture_Percent', data['Calc_Moisture_Percent']),
+                    Field('Correction_Factor', data['Correction_Factor']),
+                    Field('CreateDate', data['CreateDate']),
+                    Field('CreatedBy_Batch', data['CreatedBy']),
+                    Field('Delete_Flag', data['Delete_Flag'] and 'Y' or 'N'),
+                    Field('Design_Absorbed_Water', data['Design_Absorbed_Water']),
+                    Field('Design_Entry_Qty', data['Design_Entry_Qty']),
+                    Field('Design_Free_Water', data['Design_Free_Water']),
+                    Field('Design_SSD_Net_Target_Qty', data['Design_SSD_Net_Target_Qty']),
+                    Field('Design_SSD_Qty', data['Design_SSD_Qty']),
+                    Field('Design_UOM', data['Design_UOM']),
+                    Field('Dispatch_Design_Qty', data['Dispatch_Design_Qty']),
+                    Field('Dispatch_Design_UOM', data['Dispatch_Design_UOM']),
+                    Field('Do_Not_Batch_Flag', data['Do_Not_Batch_Flag'] and 'Y' or 'N'),
+                    Field('Effectiveness_Percent', data['Effectiveness_Percent']),
+                    Field('Ingred_ItemID', data['Ingred_ItemID']),
+                    Field('Ingredient_Source_Type', data['Ingredient_Source_Type']),
+                    Field('Item_Code', data['Item_Code']),
+                    Field('Item_Description', data['Item_Description']),
+                    Field('Kgs_Per_Liter', data['Kgs_Per_Liter']),
+                    Field('Load_Adjust_Qty', data['Load_Adjust_Qty']),
+                    Field('Load_LineID', data['Load_LineID']),
+                    Field('LoadID', data['LoadID']),
+                    Field('Manual_Feed_Flag', data['Manual_Feed_Flag'] and 'Y' or 'N'),
+                    Field('Modified_Flag', data['Modified_Flag'] and 'Y' or 'N'),
+                    Field('Moisture_Entry_Ref_Type', data['Moisture_Entry_Ref_Type']),
+                    Field('Net_Auto_Batched_Amt', data['Net_Auto_Batched_Amt']),
+                    Field('Net_Batched_Amt', data['Net_Batched_Amt']),
+                    Field('Net_Target_Amt', data['Net_Target_Amt']),
+                    Field('Net_Used_Amt', data['Net_Used_Amt']),
+                    Field('NoteExistsFlag', data['NoteExistsFlag']),
+                    Field('RecordDate', data['RecordDate']),
+                    Field('RowPointer', data['RowPointer']),
+                    Field('Scale_UOM', data['Scale_UOM']),
+                    Field('Slump_Factor', data['Slump_Factor']),
+                    Field('Solids_Specific_Gravity', data['Solids_Specific_Gravity']),
+                    Field('Sort_Line_Num', data['Sort_Line_Num']),
+                    Field('Specific_Gravity', data['Specific_Gravity']),
+                    Field('Substitution_Factor', data['Substitution_Factor']),
+                    Field('Tolerance_Over_Amt', data['Tolerance_Over_Amt']),
+                    Field('Tolerance_Under_Amt', data['Tolerance_Under_Amt']),
+                    Field('Total_Moisture_Percent', data['Total_Moisture_Percent']),
+                    Field('Trim_Qty', data['Trim_Qty']),
+                    Field('Trim_UOM', data['Trim_UOM']),
+                    Field('UpdatedBy_Batch', data['UpdatedBy']),
+                    Field('Water_UOM', data['Water_UOM']),
+                ]
+
+                wsc = WebServiceConnection()
+                wsc.url = ad_url
+                wsc.attempts = 1
+                wsc.app_name = 'InsertEBatchLoadLine'
+                 
+                response = wsc.send_request(ws)
+                wsc.print_xml_request()
+                wsc.print_xml_response()
+                try:
+                    if response.status == WebServiceResponseStatus.Error:
+                        print('Error: ' + response.error_message)
+                    else:
+                        print('RecordID: ' + str(response.record_id))
+                        for field in response.output_fields:
+                            print(str(field.column) + ': ' + str(field.value))
+                        print('---------------------------------------------')
+                        print('Web Service Type: ' + ws.web_service_type)
+                        print('Attempts: ' + str(wsc.attempts_request))
+                        print('Time: ' + str(wsc.time_request))
+                        proc_line.c_loadline_id = response.record_id
+                        proc_line.save()
+                except Exception as e:
+                    print(e)
+            
     except Exception as e:
         print(e)

@@ -12,8 +12,12 @@ class LoadProc(admin.ModelAdmin):
     
 # class TicketProc(admin.ModelAdmin):
 #     list_display = ['ticket_id', 'ticket_created', 'c_ticket_id', 'state']
-    
+
+class LoadLineProc(admin.ModelAdmin):
+    list_display = ['load_id', 'loadline_id', 'c_loadline_id', 'state']
+
 admin.site.register(models.BatchConfig, BatchConfig)
 # admin.site.register(models.BatchProc, BatchProc)
 admin.site.register(models.LoadProc, LoadProc)
 # admin.site.register(models.TicketProc, TicketProc)
+admin.site.register(models.LoadLineProc, LoadLineProc)

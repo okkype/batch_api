@@ -70,3 +70,18 @@ class LoadProc(models.Model):
      
     class Meta:
         verbose_name = 'EBatch Load Proc'
+        
+class LoadLineProc(models.Model):
+    created = models.DateTimeField(auto_now_add=True, null=True)
+    updated = models.DateTimeField(auto_now=True, null=True)
+    load_id = models.ForeignKey(LoadProc, on_delete=models.CASCADE)
+    loadline_id = models.CharField('Load_LineID', max_length=100, primary_key=True, unique=True)
+    c_loadline_id = models.CharField('Forca Load_LineID', max_length=100, null=True)
+    state = models.CharField('State', max_length=2, choices=(
+        ('DR', 'New'),
+        ('CO', 'Complete'),
+        ('UP', 'Upload')
+    ), default='DR')
+     
+    class Meta:
+        verbose_name = 'EBatch LoadLine Proc'
