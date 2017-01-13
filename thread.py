@@ -51,7 +51,7 @@ while True:
                 LOAD
             WHERE
                 Load_End_TDS IS NOT NULL
-                AND Load_End_TDS >= DATEADD(DAY, -7, GETDATE())
+                AND Load_End_TDS >= DATEADD(MONTH, -1, GETDATE())
             ORDER BY
                 Load_End_TDS DESC;
         ''')
