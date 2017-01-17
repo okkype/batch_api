@@ -1,4 +1,4 @@
-from idempierewsc.request import CreateDataRequest
+from idempierewsc.request import CreateDataRequest, UpdateDataRequest
 from idempierewsc.base import LoginRequest
 from idempierewsc.enums import WebServiceResponseStatus
 from idempierewsc.net import WebServiceConnection
@@ -51,7 +51,7 @@ while True:
                 LOAD
             WHERE
                 Load_End_TDS IS NOT NULL
-                AND Load_End_TDS >= DATEADD(MONTH, -1, GETDATE())
+                AND Load_End_TDS >= DATEADD(DAY, -20, GETDATE())
             ORDER BY
                 Load_End_TDS DESC;
         ''')
@@ -166,6 +166,7 @@ while True:
                     Field('Item_Code', data['Item_Code']),
                     Field('Ticket_Code', data['Ticket_Code']),
                     Field('M_Warehouse_ID', m_warehouse_id),
+                    Field('IsActive', 'N')
                 ]
 
                 wsc = WebServiceConnection()
@@ -285,6 +286,7 @@ while True:
                     Field('Trim_UOM', data['Trim_UOM']),
                     Field('UpdatedBy_Batch', data['UpdatedBy']),
                     Field('Water_UOM', data['Water_UOM']),
+                    Field('IsActive', 'N')
                 ]
 
                 wsc = WebServiceConnection()
@@ -310,6 +312,85 @@ while True:
                         proc_line.save()
                 except Exception as e:
                     print(e)
+        
+        proc_lines = LoadLineProc.objects.filter(state='CO', c_loadline_id__isnull=False)
+        for proc_line in proc_lines:
+            loadline_ok = False
+            proc_line.state = 'UP'
+            
+            time.sleep(0.01)
+            ws = UpdateDataRequest()
+            ws.web_service_type = 'ActivateEBatchLoadLine'
+            ws.record_id = proc_line.c_loadline_id
+            ws.login = login
+
+            ws.data_row = [
+                Field('IsActive', 'Y')
+            ]
+
+            wsc = WebServiceConnection()
+            wsc.url = ad_url
+            wsc.attempts = 1
+            wsc.app_name = 'ActivateEBatchLoadLine'
+             
+            response = wsc.send_request(ws)
+            wsc.print_xml_request()
+            wsc.print_xml_response()
+            try:
+                if response.status == WebServiceResponseStatus.Error:
+                    print('Error: ' + response.error_message)
+                else:
+                    print('RecordID: ' + str(response.record_id))
+                    for field in response.output_fields:
+                        print(str(field.column) + ': ' + str(field.value))
+                    print('---------------------------------------------')
+                    print('Web Service Type: ' + ws.web_service_type)
+                    print('Attempts: ' + str(wsc.attempts_request))
+                    print('Time: ' + str(wsc.time_request))
+                    # proc_line.c_loadline_id = response.record_id
+                    proc_line.save()
+            except Exception as e:
+                print(e)
+        
+        procs = LoadProc.objects.filter(state='CO', c_load_id__isnull=False)
+        for proc in procs:
+            load_ok = False
+            proc.state = 'UP'
+
+            time.sleep(0.01)
+            ws = UpdateDataRequest()
+            ws.web_service_type = 'ActivateEBatchLoad'
+            ws.record_id = proc.c_load_id
+            ws.login = login
+
+            ws.data_row = [
+                Field('IsActive', 'Y')
+            ]
+
+            wsc = WebServiceConnection()
+            wsc.url = ad_url
+            wsc.attempts = 1
+            wsc.app_name = 'ActivateEBatchLoad'
+
+            try:
+                response = wsc.send_request(ws)
+                wsc.print_xml_request()
+                wsc.print_xml_response()
+               
+                if response.status == WebServiceResponseStatus.Error:
+                    print('Error: ' + response.error_message)
+                else:
+                    print('RecordID: ' + str(response.record_id))
+                    for field in response.output_fields:
+                        print(str(field.column) + ': ' + str(field.value))
+                    print('---------------------------------------------')
+                    print('Web Service Type: ' + ws.web_service_type)
+                    print('Attempts: ' + str(wsc.attempts_request))
+                    print('Time: ' + str(wsc.time_request))
+                    # proc.c_load_id = response.record_id
+                    proc.save()
+            except Exception as e:
+                print(e)
             
     except Exception as e:
         print(e)
