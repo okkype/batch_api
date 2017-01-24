@@ -88,7 +88,6 @@ while True:
                 WHERE
                     LOAD.LoadID = TICKET_LINE.LoadID
                     AND TICKET_LINE.TicketID = TICKET.TicketID
-                    AND TICKET.Ticket_Code > 0
                     AND TICKET_LINE.Delete_Flag = 0
                     AND LOAD.LoadID LIKE '%s';
             """ % (proc.load_id))
@@ -199,7 +198,7 @@ while True:
 
                 if load_ok:
                     cr = cn.cursor()
-                    cr.execute("select Load_LineID from LOAD_LINE where LoadID like '%s'" % (proc.load_id))
+                    cr.execute("select Load_LineID from LOAD_LINE where LoadID like '%s' and Delete_Flag = 0" % (proc.load_id))
                     datas = cr.fetchall()
 
                     for data in datas:
