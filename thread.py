@@ -51,7 +51,7 @@ while True:
                 LOAD
             WHERE
                 Load_End_TDS IS NOT NULL
-                AND Load_End_TDS >= DATEADD(DAY, -20, GETDATE())
+                AND Load_End_TDS >= DATEADD(MONTH, -1, GETDATE())
             ORDER BY
                 Load_End_TDS DESC;
         ''')
@@ -87,6 +87,7 @@ while True:
                     TICKET
                 WHERE
                     LOAD.LoadID = TICKET_LINE.LoadID
+                    AND TICKET.Ticket_Code <> 0
                     AND TICKET_LINE.TicketID = TICKET.TicketID
                     AND TICKET_LINE.Delete_Flag = 0
                     AND LOAD.LoadID LIKE '%s';
