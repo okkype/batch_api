@@ -1,0 +1,35 @@
+{% extends 'ui/loadlineproc.html' %}
+{% load static %}
+{% block container %}
+<div class="row">
+	<div class="col-lg-12">
+	{% if object_list %}
+		<table style="width: 100%; table-layout: fixed;" class="table table-striped table-bordered table-hover">
+			<thead>
+				<tr>
+					<th>LoadID</th>
+					<th>LoadLineID</th>
+					<th>Forca LoadLineID</th>
+					<th>State</th>
+					<th style="text-align: center; width: 54px;"><a href="{% url 'loadlineproc_create' %}" class="btn btn-outline btn-success">+</a></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for object in object_list %}
+					<tr>
+						<td><a href="{% url 'loadlineproc_update' object.loadline_id %}">{{ object.loadline_id }}</a></td>
+						<td>{{ object.load_id }}</td>
+						<td>{{ object.loadline_id }}</td>
+						<td>{{ object.c_loadline_id }}</td>
+						<td>{{ object.state }}</td>
+						<td style="text-align: center;"><a href="{% url 'loadlineproc_delete' object.loadline_id %}" class="btn btn-outline btn-danger">x</a></td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% else %}
+		<a href="{% url 'loadlineproc_create' %}" class="btn btn-outline btn-success">Tambah Baru</a>
+	{% endif %}
+	</div>
+</div>
+{% endblock %}

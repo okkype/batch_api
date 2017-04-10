@@ -1,0 +1,15 @@
+{% extends 'ui/loadlineproc.html' %}
+{% load static %}
+{% block container %}
+<div class="row">
+	<div class="col-lg-12">
+		<form role="form" method="post">
+			{% csrf_token %} 
+			<table>{{ form.as_table }}</table>
+			<hr/>
+			<input type="button" value="Kembali" class="btn btn-outline btn-default" onclick="history.back()" />
+			<input type="submit" value="Submit" class="btn btn-outline btn-default" />
+		</form>
+	</div>
+</div>
+{% endblock %}

@@ -45,32 +45,60 @@ while True:
         cr = cn.cursor()
         cr.execute('''
             SELECT
-                LoadID,
-                Load_End_TDS
+                LOAD.LoadID,
+                LOAD.Load_End_TDS,
+                TICKET.Ticket_Code
             FROM
-                LOAD
+                LOAD,
+                TICKET_LINE,
+                TICKET
             WHERE
-                Load_End_TDS IS NOT NULL
-                AND Load_End_TDS >= DATEADD(MONTH, -1, GETDATE())
+                LOAD.LoadID = TICKET_LINE.LoadID
+                AND TICKET.Ticket_Code <> 0
+                AND TICKET_LINE.TicketID = TICKET.TicketID
+                AND TICKET_LINE.Delete_Flag = 0
+                AND LOAD.Load_End_TDS IS NOT NULL
+                AND LOAD.Load_End_TDS >= DATEADD(MONTH, -5, GETDATE())
             ORDER BY
-                Load_End_TDS DESC;
+                LOAD.Load_End_TDS DESC;
         ''')
         rw = cr.fetchall()
          
         for data in rw:
-            proc = False
-            try:
-                proc = LoadProc.objects.get(pk=data[0])
-            except:
-                pass
-            if proc:
-                pass
-            else:
+#             proc = False
+#             try:
+#                 proc = LoadProc.objects.get(pk=data[0])
+#             except:
+#                 pass
+#             if proc:
+#                 pass
+#             else:
                 proc = LoadProc()
                 proc.load_id = data[0]
                 proc.load_end = data[1]
-                proc.save()
+                proc.ticket_code = data[2]
+                try:
+                    proc.save()
+                except:
+                    pass
         cr.close()
+        
+        procs = LoadProc.objects.filter(c_load_id__isnull=True).order_by('load_end')
+        for proc in procs:
+            cr = cn.cursor()
+            cr.execute("select Load_LineID from LOAD_LINE where LoadID like '%s' and Delete_Flag = 0" % (proc.load_id))
+            datas = cr.fetchall()
+
+            for data in datas:
+                proc_line = LoadLineProc()
+                proc_line.load_id = proc
+                proc_line.loadline_id = data[0]
+                try:
+                    proc_line.save()
+                except:
+                    pass
+                
+            cr.close()
         
         procs = LoadProc.objects.filter(c_load_id__isnull=True).order_by('load_end')
         for proc in procs:
@@ -198,18 +226,6 @@ while True:
                 cr.close()
 
                 if load_ok:
-                    cr = cn.cursor()
-                    cr.execute("select Load_LineID from LOAD_LINE where LoadID like '%s' and Delete_Flag = 0" % (proc.load_id))
-                    datas = cr.fetchall()
-
-                    for data in datas:
-                        proc_line = LoadLineProc()
-                        proc_line.load_id = proc
-                        proc_line.loadline_id = data[0]
-                        proc_line.save()
-                        
-                    cr.close()
-
                     proc.save()
         
         proc_lines = LoadLineProc.objects.filter(c_loadline_id__isnull=True)
