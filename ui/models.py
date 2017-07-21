@@ -13,6 +13,7 @@ class BatchConfig(models.Model):
         ('ad_org_id', 'AD Org ID'),
         ('ad_role_id', 'AD Role ID'),
         ('m_warehouse_id', 'M Warehouse ID'),
+        ('combatchmachine', 'Command Batch Machine'),
         ('username', 'Username'),
         ('password', 'Password'),
         ('mssql_host', 'MSSQL Host'),
@@ -20,6 +21,8 @@ class BatchConfig(models.Model):
         ('mssql_db', 'MSSQL Database'),
         ('mssql_user', 'MSSQL Username'),
         ('mssql_pass', 'MSSQL Password'),
+        ('mssql_limit_by', 'MSSQL Limit By'),
+        ('mssql_limit', 'MSSQL Limit'),
     ), primary_key=True, unique=True)
     value = models.CharField('Value', max_length=40)
     

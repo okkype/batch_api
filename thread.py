@@ -17,6 +17,7 @@ ad_org_id = BatchConfig.objects.get(name='ad_org_id').value
 ad_role_id = BatchConfig.objects.get(name='ad_role_id').value
 ad_url = BatchConfig.objects.get(name='ad_url').value
 m_warehouse_id = BatchConfig.objects.get(name='m_warehouse_id').value
+combatchmachine = BatchConfig.objects.get(name='combatchmachine') and BatchConfig.objects.get(name='combatchmachine').value or ''
 username = BatchConfig.objects.get(name='username').value
 password = BatchConfig.objects.get(name='password').value
 mssql_host = BatchConfig.objects.get(name='mssql_host').value
@@ -24,6 +25,8 @@ mssql_port = BatchConfig.objects.get(name='mssql_port').value
 mssql_db = BatchConfig.objects.get(name='mssql_db').value
 mssql_user = BatchConfig.objects.get(name='mssql_user').value
 mssql_pass = BatchConfig.objects.get(name='mssql_pass').value
+mssql_limit_by = BatchConfig.objects.get(name='mssql_limit_by').value
+mssql_limit = BatchConfig.objects.get(name='mssql_limit').value
 
 login = LoginRequest()
 login.client_id = ad_client_id
@@ -58,10 +61,10 @@ while True:
                 AND TICKET_LINE.TicketID = TICKET.TicketID
                 AND TICKET_LINE.Delete_Flag = 0
                 AND LOAD.Load_End_TDS IS NOT NULL
-                AND LOAD.Load_End_TDS >= DATEADD(MONTH, -5, GETDATE())
+                AND LOAD.Load_End_TDS >= DATEADD(%s, %s, GETDATE())
             ORDER BY
                 LOAD.Load_End_TDS DESC;
-        ''')
+        ''' % (mssql_limit_by, mssql_limit))
         rw = cr.fetchall()
          
         for data in rw:
@@ -195,6 +198,7 @@ while True:
                     Field('Item_Code', data['Item_Code']),
                     Field('Ticket_Code', data['Ticket_Code']),
                     Field('M_Warehouse_ID', m_warehouse_id),
+                    Field('ComBatchMachine', combatchmachine),
                     Field('IsActive', 'N')
                 ]
 

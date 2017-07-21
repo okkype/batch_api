@@ -777,6 +777,6 @@ def LoadProcByDate(request):
                 
         context['load_end_from'], context['load_end_to'] = load_end_from, load_end_to
         context['object_list'] = LoadProc.objects.filter(load_end__range=[load_end_from, load_end_to])
-        for test in context['object_list'].values_list('load_id'):
-            print test
+#         for test in context['object_list'].values_list('load_id'):
+#             print test
     return render(request, 'ui/loadproc_date_list.html', context)
