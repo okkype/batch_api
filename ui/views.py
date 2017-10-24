@@ -17,26 +17,26 @@ import time
 from django.utils.datetime_safe import strftime
 from django.views.decorators.csrf import csrf_exempt
 
-ad_client_id = BatchConfig.objects.get(name='ad_client_id').value
-ad_org_id = BatchConfig.objects.get(name='ad_org_id').value
-ad_role_id = BatchConfig.objects.get(name='ad_role_id').value
-ad_url = BatchConfig.objects.get(name='ad_url').value
-m_warehouse_id = BatchConfig.objects.get(name='m_warehouse_id').value
-username = BatchConfig.objects.get(name='username').value
-password = BatchConfig.objects.get(name='password').value
-mssql_host = BatchConfig.objects.get(name='mssql_host').value
-mssql_port = BatchConfig.objects.get(name='mssql_port').value
-mssql_db = BatchConfig.objects.get(name='mssql_db').value
-mssql_user = BatchConfig.objects.get(name='mssql_user').value
-mssql_pass = BatchConfig.objects.get(name='mssql_pass').value
+# ad_client_id = BatchConfig.objects.get(name='ad_client_id').value
+# ad_org_id = BatchConfig.objects.get(name='ad_org_id').value
+# ad_role_id = BatchConfig.objects.get(name='ad_role_id').value
+# ad_url = BatchConfig.objects.get(name='ad_url').value
+# m_warehouse_id = BatchConfig.objects.get(name='m_warehouse_id').value
+# username = BatchConfig.objects.get(name='username').value
+# password = BatchConfig.objects.get(name='password').value
+# mssql_host = BatchConfig.objects.get(name='mssql_host').value
+# mssql_port = BatchConfig.objects.get(name='mssql_port').value
+# mssql_db = BatchConfig.objects.get(name='mssql_db').value
+# mssql_user = BatchConfig.objects.get(name='mssql_user').value
+# mssql_pass = BatchConfig.objects.get(name='mssql_pass').value
 
-login = LoginRequest()
-login.client_id = ad_client_id
-login.org_id = ad_org_id
-login.role_id = ad_role_id
-login.password = password
-login.user = username
-login.warehouse_id = m_warehouse_id
+# login = LoginRequest()
+# login.client_id = ad_client_id
+# login.org_id = ad_org_id
+# login.role_id = ad_role_id
+# login.password = password
+# login.user = username
+# login.warehouse_id = m_warehouse_id
 
 loadproc_fields = ['load_id', 'c_load_id', 'ticket_code', 'load_end', 'state']
 loadlineproc_fields = ['load_id', 'loadline_id', 'c_loadline_id', 'state']
@@ -135,6 +135,28 @@ class LoadLineProcDelete(DeleteView):
         return self.request.META.get('HTTP_REFERER', None) or '/'
     
 def UploadLoadProcByID(request, pk):
+    ad_client_id = BatchConfig.objects.get(name='ad_client_id').value
+    ad_org_id = BatchConfig.objects.get(name='ad_org_id').value
+    ad_role_id = BatchConfig.objects.get(name='ad_role_id').value
+    ad_url = BatchConfig.objects.get(name='ad_url').value
+    m_warehouse_id = BatchConfig.objects.get(name='m_warehouse_id').value
+    username = BatchConfig.objects.get(name='username').value
+    password = BatchConfig.objects.get(name='password').value
+    mssql_host = BatchConfig.objects.get(name='mssql_host').value
+    mssql_port = BatchConfig.objects.get(name='mssql_port').value
+    mssql_db = BatchConfig.objects.get(name='mssql_db').value
+    mssql_user = BatchConfig.objects.get(name='mssql_user').value
+    mssql_pass = BatchConfig.objects.get(name='mssql_pass').value
+    combatchmachine = BatchConfig.objects.get(name='combatchmachine') and BatchConfig.objects.get(name='combatchmachine').value or ''
+    
+    login = LoginRequest()
+    login.client_id = ad_client_id
+    login.org_id = ad_org_id
+    login.role_id = ad_role_id
+    login.password = password
+    login.user = username
+    login.warehouse_id = m_warehouse_id
+    
     cn = pymssql.connect(
         server=mssql_host,
         user=mssql_user,
@@ -236,6 +258,7 @@ def UploadLoadProcByID(request, pk):
                 Field('Item_Code', data['Item_Code']),
                 Field('Ticket_Code', data['Ticket_Code']),
                 Field('M_Warehouse_ID', m_warehouse_id),
+                Field('ComBatchMachine', combatchmachine),
                 Field('IsActive', 'N')
             ]
 
@@ -452,7 +475,29 @@ def UploadLoadProcByID(request, pk):
     return redirect(request.META.get('HTTP_REFERER', None) or '/')
 
 @csrf_exempt
-def LoadProcByDate(request):    
+def LoadProcByDate(request):
+    ad_client_id = BatchConfig.objects.get(name='ad_client_id').value
+    ad_org_id = BatchConfig.objects.get(name='ad_org_id').value
+    ad_role_id = BatchConfig.objects.get(name='ad_role_id').value
+    ad_url = BatchConfig.objects.get(name='ad_url').value
+    m_warehouse_id = BatchConfig.objects.get(name='m_warehouse_id').value
+    username = BatchConfig.objects.get(name='username').value
+    password = BatchConfig.objects.get(name='password').value
+    mssql_host = BatchConfig.objects.get(name='mssql_host').value
+    mssql_port = BatchConfig.objects.get(name='mssql_port').value
+    mssql_db = BatchConfig.objects.get(name='mssql_db').value
+    mssql_user = BatchConfig.objects.get(name='mssql_user').value
+    mssql_pass = BatchConfig.objects.get(name='mssql_pass').value
+    combatchmachine = BatchConfig.objects.get(name='combatchmachine') and BatchConfig.objects.get(name='combatchmachine').value or ''
+    
+    login = LoginRequest()
+    login.client_id = ad_client_id
+    login.org_id = ad_org_id
+    login.role_id = ad_role_id
+    login.password = password
+    login.user = username
+    login.warehouse_id = m_warehouse_id
+    
     context = {}
     str_date = strftime(timezone.now(), '%Y-%m-%d')
     context['load_end_from'], context['load_end_to'] = str_date, str_date
@@ -561,6 +606,7 @@ def LoadProcByDate(request):
                         Field('Item_Code', data['Item_Code']),
                         Field('Ticket_Code', data['Ticket_Code']),
                         Field('M_Warehouse_ID', m_warehouse_id),
+                        Field('ComBatchMachine', combatchmachine),
                         Field('IsActive', 'N')
                     ]
     
