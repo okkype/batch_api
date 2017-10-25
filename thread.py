@@ -411,6 +411,7 @@ while uuid:
                     if createHeader.content and zlib.decompress(createHeader.content) and json.loads(zlib.decompress(createHeader.content)) and json.loads(zlib.decompress(createHeader.content))[0]['C_Batch_Load_ID'.lower()]:
                         proc.c_load_id = json.loads(zlib.decompress(createHeader.content))[0]['C_Batch_Load_ID'.lower()]
                         proc.save()
+                        print "Success Create Header ID.%s" % (proc.c_load_id)
 #                         load_ok = True
                     else:
                         print "Error Create Header"
@@ -661,6 +662,7 @@ while uuid:
                     if createLine.content and zlib.decompress(createLine.content) and json.loads(zlib.decompress(createLine.content)) and json.loads(zlib.decompress(createLine.content))[0]['C_Batch_LoadLine_ID'.lower()]:
                         proc_line.c_loadline_id = json.loads(zlib.decompress(createLine.content))[0]['C_Batch_LoadLine_ID'.lower()]
                         proc_line.save()
+                        print "Success Create Line ID.%s" % (proc_line.c_loadline_id)
                     else:
                         print "Error Create Line"
                 except Exception as e:
@@ -713,6 +715,7 @@ while uuid:
                 if activateLine.content and zlib.decompress(activateLine.content) and json.loads(zlib.decompress(activateLine.content)) and json.loads(zlib.decompress(activateLine.content))[0]['C_Batch_LoadLine_ID'.lower()]:
 #                     proc_line.c_loadline_id = json.loads(zlib.decompress(createLine.content))[0]['C_Batch_LoadLine_ID'.lower()]
                     proc_line.save()
+                    print "Success Activate Line ID.%s" % (proc_line.c_loadline_id)
                 else:
                     print "Error Activate Line ID.%s" % (proc_line.c_loadline_id)
             except Exception as e:
@@ -766,6 +769,7 @@ while uuid:
                 if activateHeader.content and zlib.decompress(activateHeader.content) and json.loads(zlib.decompress(activateHeader.content)) and json.loads(zlib.decompress(activateHeader.content))[0]['C_Batch_Load_ID'.lower()]:
 #                     proc.c_load_id = json.loads(zlib.decompress(createHeader.content))[0]['C_Batch_Load_ID'.lower()]
                     proc.save()
+                    print "Success Activate Header ID.%s" % (proc.c_load_id)
 #                         load_ok = True
                 else:
                     print "Error Activate Header ID.%s" % (proc.c_load_id)
