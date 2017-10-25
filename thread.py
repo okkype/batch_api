@@ -322,72 +322,72 @@ while uuid:
                                         "ComBatchMachine":"\'%s\'",
                                         "IsActive":"\'%s\'"
                                     }]''' % (
-                                        data['Alias_Code'],
+                                        data['Alias_Code'] or '0',
                                         data['Apply_Add_Trim_Flag'] and 'Y' or 'N',
                                         data['Archive_Flag'] and 'Y' or 'N',
-                                        data['Auto_TDS'],
-                                        data['BCP_Load_ID'],
-                                        data['BCP_Load_Sort'],
-                                        data['Calc_Ack_Counter'],
-                                        data['Calc_Req_Counter'],
-                                        data['Charge_Rate_Percent'],
-                                        data['Control_Sys_Code'],
-                                        data['Control_SysID'],
-                                        data['CreateDate'],
-                                        data['CreatedBy'],
-                                        data['DemandID'],
-                                        data['Design_Slump'],
-                                        data['Ended_Load_Status'],
+                                        data['Auto_TDS'] or '1970-01-01 00:00:00',
+                                        data['BCP_Load_ID'] or '0',
+                                        data['BCP_Load_Sort'] or '0',
+                                        data['Calc_Ack_Counter'] or '0',
+                                        data['Calc_Req_Counter'] or '0',
+                                        data['Charge_Rate_Percent'] or '0',
+                                        data['Control_Sys_Code'] or '0',
+                                        data['Control_SysID'] or '0',
+                                        data['CreateDate'] or '1970-01-01 00:00:00',
+                                        data['CreatedBy'] or '0',
+                                        data['DemandID'] or '0',
+                                        data['Design_Slump'] or '0',
+                                        data['Ended_Load_Status'] or '0',
                                         data['Failed_Flag'] and 'Y' or 'N',
-                                        data['Load_Code'],
-                                        data['Load_Discharge_TDS'],
-                                        data['Load_End_TDS'],
-                                        data['Load_Size'],
-                                        data['Load_Sort_Num'],
-                                        data['Load_Start_TDS'],
-                                        data['LoadID'],
-                                        data['LoadStarted_UserCode'],
+                                        data['Load_Code'] or '0',
+                                        data['Load_Discharge_TDS'] or '1970-01-01 00:00:00',
+                                        data['Load_End_TDS'] or '1970-01-01 00:00:00',
+                                        data['Load_Size'] or '0',
+                                        data['Load_Sort_Num'] or '0',
+                                        data['Load_Start_TDS'] or '1970-01-01 00:00:00',
+                                        data['LoadID'] or '0',
+                                        data['LoadStarted_UserCode'] or '0',
                                         data['Manual_Feed_Flag'] and 'Y' or 'N',
-                                        data['Manual_TDS'],
-                                        data['Max_Batch'],
-                                        data['Max_Batch_Size'],
-                                        data['Max_Batch_Size_UOM'],
-                                        data['Max_Dispatch_WCR'],
-                                        data['Mix_Entry_Ref_Type'],
-                                        data['Mixer_TS'],
+                                        data['Manual_TDS'] or '1970-01-01 00:00:00',
+                                        data['Max_Batch'] or '0',
+                                        data['Max_Batch_Size'] or '0',
+                                        data['Max_Batch_Size_UOM'] or '0',
+                                        data['Max_Dispatch_WCR'] or '0',
+                                        data['Mix_Entry_Ref_Type'] or '0',
+                                        data['Mixer_TS'] or '0',
                                         data['NoteExistsFlag'] and 'Y' or 'N',
-                                        data['Notify_UserCode'],
-                                        data['RecordDate'],
-                                        data['ReferenceLoadID'],
-                                        data['Reship_Batched_TDS'],
+                                        data['Notify_UserCode'] or '0',
+                                        data['RecordDate'] or '1970-01-01 00:00:00',
+                                        data['ReferenceLoadID'] or '0',
+                                        data['Reship_Batched_TDS'] or '1970-01-01 00:00:00',
                                         data['Reship_Incompatible_Flag'] and 'Y' or 'N',
-                                        data['Reship_Item_Code'],
-                                        data['Reship_Item_Description'],
-                                        data['Reship_ItemID'],
-                                        data['Reship_Load_Code'],
-                                        data['Reship_LoadID'],
-                                        data['Reship_Qty'],
-                                        data['Reship_Qty_UOM'],
-                                        data['Reship_Source_Type'],
-                                        data['RowPointer'],
-                                        data['Run_Ack_Counter'],
-                                        data['Run_Req_Counter'],
-                                        data['Sequence_Code'],
-                                        data['SequenceID'],
+                                        data['Reship_Item_Code'] or '0',
+                                        data['Reship_Item_Description'] or '0',
+                                        data['Reship_ItemID'] or '0',
+                                        data['Reship_Load_Code'] or '0',
+                                        data['Reship_LoadID'] or '0',
+                                        data['Reship_Qty'] or '0',
+                                        data['Reship_Qty_UOM'] or '0',
+                                        data['Reship_Source_Type'] or '0',
+                                        data['RowPointer'] or '0',
+                                        data['Run_Ack_Counter'] or '0',
+                                        data['Run_Req_Counter'] or '0',
+                                        data['Sequence_Code'] or '0',
+                                        data['SequenceID'] or '0',
                                         data['Sequencing_Flag'] and 'Y' or 'N',
-                                        data['Simulate_Status'],
-                                        data['Slump'],
-                                        data['Slump_Code'],
-                                        data['Slump_UOM'],
-                                        data['SlumpID'],
-                                        data['Started_Load_Status'],
-                                        data['UpdatedBy'],
+                                        data['Simulate_Status'] or '0',
+                                        data['Slump'] or '0',
+                                        data['Slump_Code'] or '0',
+                                        data['Slump_UOM'] or '0',
+                                        data['SlumpID'] or '0',
+                                        data['Started_Load_Status'] or '0',
+                                        data['UpdatedBy'] or '0',
                                         data['Washout_Used_Flag'] and 'Y' or 'N',
-                                        data['Water_Cement_Ratio'],
-                                        data['Water_In_Truck'],
-                                        data['Water_In_Truck_UOM'],
-                                        data['Item_Code'],
-                                        data['Ticket_Code'],
+                                        data['Water_Cement_Ratio'] or '0',
+                                        data['Water_In_Truck'] or '0',
+                                        data['Water_In_Truck_UOM'] or '0',
+                                        data['Item_Code'] or '0',
+                                        data['Ticket_Code'] or '0',
                                         m_warehouse_id,
                                         combatchmachine,
                                         'N'
@@ -407,16 +407,23 @@ while uuid:
 #                         print('Time: ' + str(wsc.time_request))
 #                         proc.c_load_id = response.record_id
 #                         load_ok = True
-                        
-                    if createHeader.content and zlib.decompress(createHeader.content) and json.loads(zlib.decompress(createHeader.content)) and json.loads(zlib.decompress(createHeader.content))[0]['C_Batch_Load_ID'.lower()]:
-                        proc.c_load_id = json.loads(zlib.decompress(createHeader.content))[0]['C_Batch_Load_ID'.lower()]
-                        proc.save()
-                        print "Success Create Header ID.%s" % (proc.c_load_id)
-#                         load_ok = True
-                    else:
-                        print "Error Create Header"
-                except Exception as e:
-                    print(e)
+                    try:
+                        if createHeader.content and zlib.decompress(createHeader.content) and json.loads(zlib.decompress(createHeader.content)) and json.loads(zlib.decompress(createHeader.content))[0]['C_Batch_Load_ID'.lower()]:
+                            proc.c_load_id = json.loads(zlib.decompress(createHeader.content))[0]['C_Batch_Load_ID'.lower()]
+                            proc.save()
+                            print "Success Create Header ID.%s" % (proc.c_load_id)
+    #                         load_ok = True
+                        else:
+                            print "Error Create Header"
+                    except:
+                        print "Server Error Create Header"
+                        print createHeader.content and zlib.decompress(createHeader.content)
+                    finally:
+                        pass
+                finally:
+                    pass
+                # except Exception as e:
+                    # print(e)
 
                 cr.close()
 
@@ -432,7 +439,7 @@ while uuid:
             cr.execute("select * from LOAD_LINE where Load_LineID like '%s' and Delete_Flag = 0" % (proc_line.loadline_id))
             data = cr.fetchone()
             
-            if data:
+            if data and proc_line.load_id.c_load_id:
                 time.sleep(0.01)
 #                 ws = CreateDataRequest()
 #                 ws.web_service_type = 'InsertEBatchLoadLine'
@@ -597,76 +604,84 @@ while uuid:
                                         "IsActive":"\'%s\'"
                                     }]''' % (
                                         proc_line.load_id.c_load_id,
-                                        data["Absorbed_Water"],
-                                        data["Absorption_Percent"],
-                                        data["Actual_Water"],
-                                        data["Actual_Water_Calc_Type"],
-                                        data["Adjust_UOM"],
-                                        data["Alias_Code"],
-                                        data["Amt_UOM"],
+                                        data["Absorbed_Water"] or '0',
+                                        data["Absorption_Percent"] or '0',
+                                        data["Actual_Water"] or '0',
+                                        data["Actual_Water_Calc_Type"] or '0',
+                                        data["Adjust_UOM"] or '0',
+                                        data["Alias_Code"] or '0',
+                                        data["Amt_UOM"] or '0',
                                         data["Archive_Flag"] and "Y" or "N",
-                                        data["Based_On_Factor"],
-                                        data["Based_On_Qty"],
-                                        data["Based_On_UOM"],
-                                        data["Calc_Factor"],
-                                        data["Calc_Moisture_Percent"],
-                                        data["Correction_Factor"],
-                                        data["CreateDate"],
-                                        data["CreatedBy"],
+                                        data["Based_On_Factor"] or '0',
+                                        data["Based_On_Qty"] or '0',
+                                        data["Based_On_UOM"] or '0',
+                                        data["Calc_Factor"] or '0',
+                                        data["Calc_Moisture_Percent"] or '0',
+                                        data["Correction_Factor"] or '0',
+                                        data["CreateDate"] or '1970-01-01 00:00:00',
+                                        data["CreatedBy"] or '0',
                                         data["Delete_Flag"] and "Y" or "N",
-                                        data["Design_Absorbed_Water"],
-                                        data["Design_Entry_Qty"],
-                                        data["Design_Free_Water"],
-                                        data["Design_SSD_Net_Target_Qty"],
-                                        data["Design_SSD_Qty"],
-                                        data["Design_UOM"],
-                                        data["Dispatch_Design_Qty"],
-                                        data["Dispatch_Design_UOM"],
+                                        data["Design_Absorbed_Water"] or '0',
+                                        data["Design_Entry_Qty"] or '0',
+                                        data["Design_Free_Water"] or '0',
+                                        data["Design_SSD_Net_Target_Qty"] or '0',
+                                        data["Design_SSD_Qty"] or '0',
+                                        data["Design_UOM"] or '0',
+                                        data["Dispatch_Design_Qty"] or '0',
+                                        data["Dispatch_Design_UOM"] or '0',
                                         data["Do_Not_Batch_Flag"] and "Y" or "N",
-                                        data["Effectiveness_Percent"],
-                                        data["Ingred_ItemID"],
-                                        data["Ingredient_Source_Type"],
-                                        data["Item_Code"],
-                                        data["Item_Description"],
-                                        data["Kgs_Per_Liter"],
-                                        data["Load_Adjust_Qty"],
-                                        data["Load_LineID"],
-                                        data["LoadID"],
+                                        data["Effectiveness_Percent"] or '0',
+                                        data["Ingred_ItemID"] or '0',
+                                        data["Ingredient_Source_Type"] or '0',
+                                        data["Item_Code"] or '0',
+                                        data["Item_Description"] or '0',
+                                        data["Kgs_Per_Liter"] or '0',
+                                        data["Load_Adjust_Qty"] or '0',
+                                        data["Load_LineID"] or '0',
+                                        data["LoadID"] or '0',
                                         data["Manual_Feed_Flag"] and "Y" or "N",
                                         data["Modified_Flag"] and "Y" or "N",
-                                        data["Moisture_Entry_Ref_Type"],
-                                        data["Net_Auto_Batched_Amt"],
-                                        data["Net_Batched_Amt"],
-                                        data["Net_Target_Amt"],
-                                        data["Net_Used_Amt"],
+                                        data["Moisture_Entry_Ref_Type"] or '0',
+                                        data["Net_Auto_Batched_Amt"] or '0',
+                                        data["Net_Batched_Amt"] or '0',
+                                        data["Net_Target_Amt"] or '0',
+                                        data["Net_Used_Amt"] or '0',
                                         data["NoteExistsFlag"] and "Y" or "N",
-                                        data["RecordDate"],
-                                        data["RowPointer"],
-                                        data["Scale_UOM"],
-                                        data["Slump_Factor"],
-                                        data["Solids_Specific_Gravity"],
-                                        data["Sort_Line_Num"],
-                                        data["Specific_Gravity"],
-                                        data["Substitution_Factor"],
-                                        data["Tolerance_Over_Amt"],
-                                        data["Tolerance_Under_Amt"],
-                                        data["Total_Moisture_Percent"],
-                                        data["Trim_Qty"],
-                                        data["Trim_UOM"],
-                                        data["UpdatedBy"],
-                                        data["Water_UOM"],
+                                        data["RecordDate"] or '1970-01-01 00:00:00',
+                                        data["RowPointer"] or '0',
+                                        data["Scale_UOM"] or '0',
+                                        data["Slump_Factor"] or '0',
+                                        data["Solids_Specific_Gravity"] or '0',
+                                        data["Sort_Line_Num"] or '0',
+                                        data["Specific_Gravity"] or '0',
+                                        data["Substitution_Factor"] or '0',
+                                        data["Tolerance_Over_Amt"] or '0',
+                                        data["Tolerance_Under_Amt"] or '0',
+                                        data["Total_Moisture_Percent"] or '0',
+                                        data["Trim_Qty"] or '0',
+                                        data["Trim_UOM"] or '0',
+                                        data["UpdatedBy"] or '0',
+                                        data["Water_UOM"] or '0',
                                         "N"
                                     ),
                         'returning':'C_Batch_LoadLine_ID'
                         })
-                    if createLine.content and zlib.decompress(createLine.content) and json.loads(zlib.decompress(createLine.content)) and json.loads(zlib.decompress(createLine.content))[0]['C_Batch_LoadLine_ID'.lower()]:
-                        proc_line.c_loadline_id = json.loads(zlib.decompress(createLine.content))[0]['C_Batch_LoadLine_ID'.lower()]
-                        proc_line.save()
-                        print "Success Create Line ID.%s" % (proc_line.c_loadline_id)
-                    else:
-                        print "Error Create Line"
-                except Exception as e:
-                    print(e)
+                    try:
+                        if createLine.content and zlib.decompress(createLine.content) and json.loads(zlib.decompress(createLine.content)) and json.loads(zlib.decompress(createLine.content))[0]['C_Batch_LoadLine_ID'.lower()]:
+                            proc_line.c_loadline_id = json.loads(zlib.decompress(createLine.content))[0]['C_Batch_LoadLine_ID'.lower()]
+                            proc_line.save()
+                            print "Success Create Line ID.%s" % (proc_line.c_loadline_id)
+                        else:
+                            print "Error Create Line"
+                    except:
+                        print "Server Error Create Line"
+                        print createLine.content and zlib.decompress(createLine.content)
+                    finally:
+                        pass
+                finally:
+                    pass
+                # except Exception as e:
+                    # print(e)
         
         proc_lines = LoadLineProc.objects.filter(state='CO', c_loadline_id__isnull=False)
         for proc_line in proc_lines:
@@ -712,14 +727,22 @@ while uuid:
                     'returning':'C_Batch_LoadLine_ID',
                     'id':proc_line.c_loadline_id
                     })
-                if activateLine.content and zlib.decompress(activateLine.content) and json.loads(zlib.decompress(activateLine.content)) and json.loads(zlib.decompress(activateLine.content))[0]['C_Batch_LoadLine_ID'.lower()]:
-#                     proc_line.c_loadline_id = json.loads(zlib.decompress(createLine.content))[0]['C_Batch_LoadLine_ID'.lower()]
-                    proc_line.save()
-                    print "Success Activate Line ID.%s" % (proc_line.c_loadline_id)
-                else:
-                    print "Error Activate Line ID.%s" % (proc_line.c_loadline_id)
-            except Exception as e:
-                print(e)
+                try:
+                    if activateLine.content and zlib.decompress(activateLine.content) and json.loads(zlib.decompress(activateLine.content)) and json.loads(zlib.decompress(activateLine.content))[0]['C_Batch_LoadLine_ID'.lower()]:
+    #                     proc_line.c_loadline_id = json.loads(zlib.decompress(createLine.content))[0]['C_Batch_LoadLine_ID'.lower()]
+                        proc_line.save()
+                        print "Success Activate Line ID.%s" % (proc_line.c_loadline_id)
+                    else:
+                        print "Error Activate Line ID.%s" % (proc_line.c_loadline_id)
+                except:
+                    print "Server Error Activate Line ID.%s" % (proc_line.c_loadline_id)
+                    print activateLine.content and zlib.decompress(activateLine.content)
+                finally:
+                    pass
+            finally:
+                pass
+            # except Exception as e:
+                # print(e)
         
         procs = LoadProc.objects.filter(state='CO', c_load_id__isnull=False)
         for proc in procs:
@@ -766,15 +789,24 @@ while uuid:
                     'returning':'C_Batch_Load_ID',
                     'id':proc.c_load_id
                     })
-                if activateHeader.content and zlib.decompress(activateHeader.content) and json.loads(zlib.decompress(activateHeader.content)) and json.loads(zlib.decompress(activateHeader.content))[0]['C_Batch_Load_ID'.lower()]:
-#                     proc.c_load_id = json.loads(zlib.decompress(createHeader.content))[0]['C_Batch_Load_ID'.lower()]
-                    proc.save()
-                    print "Success Activate Header ID.%s" % (proc.c_load_id)
-#                         load_ok = True
-                else:
-                    print "Error Activate Header ID.%s" % (proc.c_load_id)
-            except Exception as e:
-                print(e)
-            
-    except Exception as e:
-        print(e)
+                try:
+                    if activateHeader.content and zlib.decompress(activateHeader.content) and json.loads(zlib.decompress(activateHeader.content)) and json.loads(zlib.decompress(activateHeader.content))[0]['C_Batch_Load_ID'.lower()]:
+    #                     proc.c_load_id = json.loads(zlib.decompress(createHeader.content))[0]['C_Batch_Load_ID'.lower()]
+                        proc.save()
+                        print "Success Activate Header ID.%s" % (proc.c_load_id)
+    #                         load_ok = True
+                    else:
+                        print "Error Activate Header ID.%s" % (proc.c_load_id)
+                except:
+                    print "Server Error Activate Header ID.%s" % (proc.c_load_id)
+                    print activateHeader.content and zlib.decompress(activateHeader.content)
+                finally:
+                    pass
+            finally:
+                pass
+            # except Exception as e:
+                # print(e)     
+    finally:
+        pass
+    # except Exception as e:
+        # print(e)
