@@ -21,7 +21,7 @@ ad_org_id = BatchConfig.objects.get(name='ad_org_id').value
 ad_role_id = BatchConfig.objects.get(name='ad_role_id').value
 ad_url = BatchConfig.objects.get(name='ad_url').value
 m_warehouse_id = BatchConfig.objects.get(name='m_warehouse_id').value
-combatchmachine = BatchConfig.objects.get(name='combatchmachine') and BatchConfig.objects.get(name='combatchmachine').value or ''
+
 username = BatchConfig.objects.get(name='username').value
 password = BatchConfig.objects.get(name='password').value
 mssql_host = BatchConfig.objects.get(name='mssql_host').value
@@ -29,8 +29,19 @@ mssql_port = BatchConfig.objects.get(name='mssql_port').value
 mssql_db = BatchConfig.objects.get(name='mssql_db').value
 mssql_user = BatchConfig.objects.get(name='mssql_user').value
 mssql_pass = BatchConfig.objects.get(name='mssql_pass').value
-mssql_limit_by = BatchConfig.objects.get(name='mssql_limit_by') and BatchConfig.objects.get(name='mssql_limit_by').value or 'DAY'
-mssql_limit = BatchConfig.objects.get(name='mssql_limit') and BatchConfig.objects.get(name='mssql_limit').value or '-7'
+
+try:
+    combatchmachine = BatchConfig.objects.get(name='combatchmachine') and BatchConfig.objects.get(name='combatchmachine').value or ''
+except:
+    combatchmachine = ''
+try:
+    mssql_limit_by = BatchConfig.objects.get(name='mssql_limit_by') and BatchConfig.objects.get(name='mssql_limit_by').value or 'DAY'
+except:
+    mssql_limit_by = 'DAY'
+try:
+    mssql_limit = BatchConfig.objects.get(name='mssql_limit') and BatchConfig.objects.get(name='mssql_limit').value or '-7'
+except:
+    mssql_limit = '-7'
 
 login = LoginRequest()
 login.client_id = ad_client_id
