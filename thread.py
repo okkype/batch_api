@@ -439,10 +439,10 @@ while uuid:
                         print createHeader.content and zlib.decompress(createHeader.content)
                     finally:
                         pass
+                except Exception as e:
+                    print(e)
                 finally:
                     pass
-                # except Exception as e:
-                    # print(e)
 
                 cr.close()
 
@@ -697,10 +697,10 @@ while uuid:
                         print createLine.content and zlib.decompress(createLine.content)
                     finally:
                         pass
+                except Exception as e:
+                    print(e)
                 finally:
                     pass
-                # except Exception as e:
-                    # print(e)
         
         proc_lines = LoadLineProc.objects.filter(state='CO', c_loadline_id__isnull=False)
         for proc_line in proc_lines:
@@ -758,10 +758,10 @@ while uuid:
                     print activateLine.content and zlib.decompress(activateLine.content)
                 finally:
                     pass
+            except Exception as e:
+                print(e)
             finally:
                 pass
-            # except Exception as e:
-                # print(e)
         
         procs = LoadProc.objects.filter(state='CO', c_load_id__isnull=False)
         for proc in procs:
@@ -821,11 +821,11 @@ while uuid:
                     print activateHeader.content and zlib.decompress(activateHeader.content)
                 finally:
                     pass
+            except Exception as e:
+                print(e)     
             finally:
                 pass
-            # except Exception as e:
-                # print(e)     
+    except Exception as e:
+        print(e)
     finally:
         pass
-    # except Exception as e:
-        # print(e)
