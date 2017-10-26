@@ -18,8 +18,8 @@ from datetime import datetime, timedelta
 
 def normalize(data):
     try:
-        data = data.replace('\'','\\\'')
-        data = data.replace('\"','\\\"')
+        data = data.replace('\'','\\\\\'')
+        data = data.replace('\"','\\\\\"')
     except:
         pass
     return data
