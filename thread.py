@@ -17,11 +17,11 @@ from datetime import datetime, timedelta
 #         mssql_pass, login, cn
 
 def normalize(data):
-    try:
-        data = data.replace('\'','\'\'')
-        data = data.replace('\"','\"\"')
-    except:
-        pass
+    # try:
+        # data = data.replace('\'','\'\'')
+        # data = data.replace('\"','\"\"')
+    # except:
+        # pass
     return data
 
 ad_client_id = BatchConfig.objects.get(name='ad_client_id').value
