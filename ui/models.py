@@ -21,8 +21,10 @@ class BatchConfig(models.Model):
         ('mssql_db', 'MSSQL Database'),
         ('mssql_user', 'MSSQL Username'),
         ('mssql_pass', 'MSSQL Password'),
-        ('mssql_limit_by', 'MSSQL Limit By'),
-        ('mssql_limit', 'MSSQL Limit'),
+        ('mssql_limit_by', 'MSSQL Upper Limit By'),
+        ('mssql_limit', 'MSSQL Upper Limit'),
+        ('mssql_lomit_by', 'MSSQL Lower Limit By'),
+        ('mssql_lomit', 'MSSQL Lower Limit'),
     ), primary_key=True, unique=True)
     value = models.CharField('Value', max_length=40)
     

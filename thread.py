@@ -42,6 +42,7 @@ try:
     combatchmachine = BatchConfig.objects.get(name='combatchmachine') and BatchConfig.objects.get(name='combatchmachine').value or ''
 except:
     combatchmachine = ''
+
 try:
     mssql_limit_by = BatchConfig.objects.get(name='mssql_limit_by') and BatchConfig.objects.get(name='mssql_limit_by').value or 'DAY'
 except:
@@ -50,6 +51,15 @@ try:
     mssql_limit = BatchConfig.objects.get(name='mssql_limit') and BatchConfig.objects.get(name='mssql_limit').value or '-7'
 except:
     mssql_limit = '-7'
+
+try:
+    mssql_lomit_by = BatchConfig.objects.get(name='mssql_lomit_by') and BatchConfig.objects.get(name='mssql_lomit_by').value or 'MINUTE'
+except:
+    mssql_lomit_by = 'MINUTE'
+try:
+    mssql_lomit = BatchConfig.objects.get(name='mssql_lomit') and BatchConfig.objects.get(name='mssql_lomit').value or '-1'
+except:
+    mssql_lomit = '-1'
 
 login = LoginRequest()
 login.client_id = ad_client_id
@@ -95,9 +105,10 @@ while uuid:
                 AND TICKET_LINE.Delete_Flag = 0
                 AND LOAD.Load_End_TDS IS NOT NULL
                 AND LOAD.Load_End_TDS >= DATEADD(%s, %s, GETDATE())
+                AND LOAD.Load_End_TDS <= DATEADD(%s, %s, GETDATE())
             ORDER BY
                 LOAD.Load_End_TDS DESC;
-        ''' % (mssql_limit_by, mssql_limit))
+        ''' % (mssql_limit_by, mssql_limit, mssql_lomit_by, mssql_lomit))
         rw = cr.fetchall()
          
         for data in rw:
