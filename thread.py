@@ -101,6 +101,7 @@ while uuid:
             WHERE
                 LOAD.LoadID = TICKET_LINE.LoadID
                 AND TICKET.Ticket_Code <> 0
+                AND TICKET.Ticket_Code IS NOT NULL
                 AND TICKET_LINE.TicketID = TICKET.TicketID
                 AND TICKET_LINE.Delete_Flag = 0
                 AND LOAD.Load_End_TDS IS NOT NULL
